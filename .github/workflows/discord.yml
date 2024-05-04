@@ -1,0 +1,20 @@
+name: Discord Notification
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  send-notification:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Send Discord notification
+        run: node send-notification.js
+        env:
+          WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
